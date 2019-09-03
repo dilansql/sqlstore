@@ -486,7 +486,7 @@ FUNCTION GAS_S08 (PMPRN IN NUMBER) RETURN GM_MANAGER.TABLEOFVARCHAR2
  BEGIN
      SELECT S15 BULK COLLECT INTO S15_CONTENTS FROM (
      SELECT 1,'"A00",402,"TRF",'||TO_CHAR(SYSDATE,'YYYYMMDD,HH24mmss')||',1' AS S15 FROM DUAL UNION --header with todays date
-     SELECT 2,'"S15",'||S07.CONFIRMATION_REFERENCE||',"'||S07.NOMINATION_SHIPPER_REF||'",'||TO_CHAR(S07.CONFIRMATION_EFFECTIVE_DATE, 'YYYYMMDD')||',"FIRM","","A",0,0,0,0,0,403,403,0.0278,0,0.0329,0.2782,"SO2","SO",12254,"NDMA",0,"","","",'||TO_CHAR(SYSDATE-1,'YYYYMMDD,HHmmss')||',"D"' AS S15 
+     SELECT 2,'"S15",'||S07.CONFIRMATION_REFERENCE||',"'||S07.NOMINATION_SHIPPER_REF||'",'||TO_CHAR(S07.CONFIRMATION_EFFECTIVE_DATE, 'YYYYMMDD')||',"A",,,,,0.0278,0,0.0329,0.2782,"SO2","SO",12254,"NDMA","","","",'||TO_CHAR(SYSDATE-1,'YYYYMMDD,HHmmss')||',"D",4,"",,"0",,"",,,,"",""' AS S15 
          FROM GASFLOWS.S_CFR_S07_SHIP_SUP_S07 S07, GASFLOWS.S_CFR_S07_SHIP_SUP_S70 S70, GASFLOWS.S_CFR_S07_SHIP_SUP_S75 S75 
          WHERE S07.FILEID_S07=S70.FILEID_S07 AND S70.FILEID_S70=S75.FILEID_S70 AND S75.MPRN=PMPRN AND ROWNUM =1  UNION
      SELECT 3,'"S70",'||
@@ -499,7 +499,7 @@ FUNCTION GAS_S08 (PMPRN IN NUMBER) RETURN GM_MANAGER.TABLEOFVARCHAR2
        ||'","'||A.OUTCODE
        ||'","'||A.INCODE ||'"'
        FROM GASPRICING.MPRNS A WHERE MPRN = PMPRN) AS S15 FROM DUAL UNION
-     SELECT 4,'"S75",'||PMPRN||',9,"'||A.MSN||'","NDM",3356,"",,"",3.14,,"CR",04,""' AS S07 FROM GASPRICING.MPRNS A WHERE MPRN= PMPRN UNION
+     SELECT 4,'"S75",'||PMPRN||',9,"'||A.MSN||'",3356,"","","F",3.14,,"CR",04,"BGT",5555,"N"' AS S07 FROM GASPRICING.MPRNS A WHERE MPRN= PMPRN UNION
      SELECT 5,'"K12","T","'||K12.CURRENT_MAM_ABBREVIATED_NAME||'","",' AS S15 
        FROM GASFLOWS.S_CFR_S07_SHIP_SUP_S75 S75, GASFLOWS.S_CFR_S07_SHIP_SUP_K12 K12 WHERE S75.FILEID_S75=K12.FILEID_S75 AND S75.MPRN=PMPRN AND ROWNUM = 1 
        UNION
@@ -657,6 +657,19 @@ FUNCTION GAS_S08 (PMPRN IN NUMBER) RETURN GM_MANAGER.TABLEOFVARCHAR2
  END;
 
 ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+function GAS_T05 (PMPRN in number) return GM_MANAGER.TABLEOFVARCHAR2
+	is T05_CONTENTS GM_MANAGER.TABLEOFVARCHAR2;
+begin
+select T05 bulk collect into T05_CONTENTS from (
+select 1, '"A00",10006569,"CNF",20160627,100640,1'  as T05 from DUAL union
+select 2, '"T05","392715094","ISE'||upper(''||(select customerid from gascontracts.contract_VW where upan = PMPRN)||'')||'",'||PMPRN||',01'  as T05 from DUAL union
+select 3, '"Z99",1' as T05 from DUAL);
+return T05_CONTENTS;
+end;
+
+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
 
 FUNCTION GAS_T06 (PMPRN IN NUMBER, OUTCOME_CODE IN VARCHAR2) RETURN GM_MANAGER.TABLEOFVARCHAR2
      IS T06_CONTENTS GM_MANAGER.TABLEOFVARCHAR2;
