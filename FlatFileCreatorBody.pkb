@@ -1018,13 +1018,36 @@ return D0093_CONTENTS;
 end;
 
 ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-/*--D0149
+
 function ELEC_D0149 (PMPAN in number) return GM_MANAGER.TABLEOFVARCHAR2
+is D0149_CONTENTS GM_MANAGER.TABLEOFVARCHAR2;
+begin
+select D0149 bulk collect into D0149_CONTENTS from (
+select 1, 'ZHV|'||(select CUSTOMERID from CONTRACTS.CONTRACTS_VW where MPANCORE = PMPAN)||'|D0149001|M|LBSL|X|COOP|'||(select TO_CHAR(SYSDATE, 'YYYYMMDDHHMMSS') from DUAL)||'||||TR01|' as D0149 from DUAL union
+select 2, '280|'||PMPAN||'|'||(select to_CHAR(EFDMSMTD,'YYYYMMDD') from BILLING.NHHACTUALMETERREADINGS where MPANCORE = PMPAN and rownum = 1)||'|' as D0149 from DUAL union
+select 3, '281|0169|'||(select to_CHAR(EFDREGI,'YYYYMMDD') from CONTRACTS.CONTRACTS_VW where MPANCORE = PMPAN and rownum = 1)||'|' as D0149 from DUAL union
+select 4, '778|01059|' as D0149 from DUAL union
+select 5, '283|'||(select METERID from BILLING.NHHACTUALMETERREADINGS where mpancore = PMPAN and rownum = 1)||'|' as D0149 from DUAL union
+select 6, '284||'||(select substr(METERREGISTERID,2,3) from BILLING.NHHACTUALMETERREADINGS where MPANCORE = PMPAN and rownum = 1)||'|1|' as D0149 from DUAL union
+select 7, 'ZPT|'||(SELECT CUSTOMERID FROM CONTRACTS.CONTRACTS_VW WHERE MPANCORE = PMPAN and rownum = 1)||'|5||1|'||(select TO_CHAR(SYSDATE, 'YYYYMMDDHHMMSS') from DUAL)||'|' as D0149 from DUAL);
+RETURN D0149_CONTENTS;
+end;
 
 ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
---D0150
+
 function ELEC_D0150 (PMPAN in number) return GM_MANAGER.TABLEOFVARCHAR2
-*/
+is D0150_CONTENTS GM_MANAGER.TABLEOFVARCHAR2;
+begin
+select D0150 bulk collect into D0150_CONTENTS from (
+select 1, 'ZHV|'||(select CUSTOMERID from CONTRACTS.CONTRACTS_VW where MPANCORE = PMPAN)||'|D0150001|M|LOND|X|COOP|'||(select TO_CHAR(SYSDATE, 'YYYYMMDDHHMMSS') from DUAL)||'||||TR01|' as D0150 from DUAL union
+select 2, '288|'||PMPAN||'|'||(select TO_CHAR(EFDMSMTD,'YYYYMMDD') from BILLING.NHHACTUALMETERREADINGS where MPANCORE = PMPAN and rownum = 1)||'||E|' as D0150 from DUAL union
+select 3, '289|0393|'||(select TO_CHAR(EFDREGI,'YYYYMMDD') from CONTRACTS.CONTRACTS_VW where MPANCORE = PMPAN and rownum = 1)||'|||' as D0150 from DUAL union
+select 4, '290|'||(select METERID from BILLING.NHHACTUALMETERREADINGS where MPANCORE = PMPAN and rownum = 1)||'|||100|'||(select METERLOCATION from CONTRACTS.MULTISITE_MPAN_METER_LOCATION where MPANCORE = PMPAN)||'|AMPY 5235A|LOND|||||||||||K|20191107|20070822|20270822|||H|20080205|' as D0150 from DUAL union
+select 5, '293|'||(select ''||substr(METERREGISTERID,2,3)||'|C|'||MEASUREMENTQUANTITYID||'|'||METERREGISTERMULTIPLIER||'.00||5|||' from BILLING.NHHACTUALMETERREADINGS where MPANCORE = PMPAN and ROWNUM = 1)||'' as D0150 from DUAL union
+select 6, 'ZPT|'||(SELECT CUSTOMERID FROM CONTRACTS.CONTRACTS_VW WHERE MPANCORE = PMPAN and rownum = 1)||'|4||1|'||(select TO_CHAR(SYSDATE, 'YYYYMMDDHHMMSS') from DUAL)||'|' as D0150 from DUAL);
+RETURN D0150_CONTENTS;
+end;
+
 ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 --D0171
 function ELEC_D0171 (PMPAN in number, SPX IN VARCHAR) return GM_MANAGER.TABLEOFVARCHAR2
