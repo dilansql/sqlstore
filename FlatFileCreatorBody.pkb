@@ -1,4 +1,4 @@
-create or replace package body                                                    FLATFILECREATOR as 
+create or replace package body                                                                    FLATFILECREATOR as 
 
 ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
@@ -1023,12 +1023,12 @@ function ELEC_D0149 (PMPAN in number) return GM_MANAGER.TABLEOFVARCHAR2
 is D0149_CONTENTS GM_MANAGER.TABLEOFVARCHAR2;
 begin
 select D0149 bulk collect into D0149_CONTENTS from (
-select 1, 'ZHV|'||(select CUSTOMERID from CONTRACTS.CONTRACTS_VW where MPANCORE = PMPAN)||'|D0149001|M|LBSL|X|COOP|'||(select TO_CHAR(SYSDATE, 'YYYYMMDDHHMMSS') from DUAL)||'||||TR01|' as D0149 from DUAL union
+select 1, 'ZHV|'||(select CUSTOMERID from CONTRACTS.CONTRACTS_VW where MPANCORE = PMPAN and rownum = 1)||'|D0149001|M|LBSL|X|COOP|'||(select TO_CHAR(SYSDATE, 'YYYYMMDDHHMMSS') from DUAL)||'||||TR01|' as D0149 from DUAL union
 select 2, '280|'||PMPAN||'|'||(select to_CHAR(EFDMSMTD,'YYYYMMDD') from BILLING.NHHACTUALMETERREADINGS where MPANCORE = PMPAN and rownum = 1)||'|' as D0149 from DUAL union
 select 3, '281|0169|'||(select to_CHAR(EFDREGI,'YYYYMMDD') from CONTRACTS.CONTRACTS_VW where MPANCORE = PMPAN and rownum = 1)||'|' as D0149 from DUAL union
 select 4, '778|01059|' as D0149 from DUAL union
 select 5, '283|'||(select METERID from BILLING.NHHACTUALMETERREADINGS where mpancore = PMPAN and rownum = 1)||'|' as D0149 from DUAL union
-select 6, '284||'||(select substr(METERREGISTERID,2,3) from BILLING.NHHACTUALMETERREADINGS where MPANCORE = PMPAN and rownum = 1)||'|1|' as D0149 from DUAL union
+select 6, '284|'||(select substr(METERREGISTERID,2,3) from BILLING.NHHACTUALMETERREADINGS where MPANCORE = PMPAN and rownum = 1)||'|1|' as D0149 from DUAL union
 select 7, 'ZPT|'||(SELECT CUSTOMERID FROM CONTRACTS.CONTRACTS_VW WHERE MPANCORE = PMPAN and rownum = 1)||'|5||1|'||(select TO_CHAR(SYSDATE, 'YYYYMMDDHHMMSS') from DUAL)||'|' as D0149 from DUAL);
 RETURN D0149_CONTENTS;
 end;
@@ -1039,7 +1039,7 @@ function ELEC_D0150 (PMPAN in number) return GM_MANAGER.TABLEOFVARCHAR2
 is D0150_CONTENTS GM_MANAGER.TABLEOFVARCHAR2;
 begin
 select D0150 bulk collect into D0150_CONTENTS from (
-select 1, 'ZHV|'||(select CUSTOMERID from CONTRACTS.CONTRACTS_VW where MPANCORE = PMPAN)||'|D0150001|M|LOND|X|COOP|'||(select TO_CHAR(SYSDATE, 'YYYYMMDDHHMMSS') from DUAL)||'||||TR01|' as D0150 from DUAL union
+select 1, 'ZHV|'||(select CUSTOMERID from CONTRACTS.CONTRACTS_VW where MPANCORE = PMPAN and rownum = 1)||'|D0150001|M|LOND|X|COOP|'||(select TO_CHAR(SYSDATE, 'YYYYMMDDHHMMSS') from DUAL)||'||||TR01|' as D0150 from DUAL union
 select 2, '288|'||PMPAN||'|'||(select TO_CHAR(EFDMSMTD,'YYYYMMDD') from BILLING.NHHACTUALMETERREADINGS where MPANCORE = PMPAN and rownum = 1)||'||E|' as D0150 from DUAL union
 select 3, '289|0393|'||(select TO_CHAR(EFDREGI,'YYYYMMDD') from CONTRACTS.CONTRACTS_VW where MPANCORE = PMPAN and rownum = 1)||'|||' as D0150 from DUAL union
 select 4, '290|'||(select METERID from BILLING.NHHACTUALMETERREADINGS where MPANCORE = PMPAN and rownum = 1)||'|||100|'||(select METERLOCATION from CONTRACTS.MULTISITE_MPAN_METER_LOCATION where MPANCORE = PMPAN)||'|AMPY 5235A|LOND|||||||||||K|20191107|20070822|20270822|||H|20080205|' as D0150 from DUAL union
@@ -1166,6 +1166,29 @@ select 2, '31I|53220|'  as D0361 from DUAL union
 select 3, '32I|53220|SP94|'||PMPAN||'|'||(select TO_CHAR(SYSDATE+20, 'YYYYMMDD') from DUAL)||'|42400051|'  as D0361 from DUAL union
 select 4, 'ZPT|TEST|2||1|'||(select TO_CHAR(SYSDATE, 'YYYYMMDDHHMMSS') from DUAL)||'|' AS D0361 from DUAL);
 return D0361_CONTENTS;
+end;
+
+
+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+function ELEC_D0367 (PMPAN in number) return GM_MANAGER.TABLEOFVARCHAR2
+
+is D0367_CONTENTS GM_MANAGER.TABLEOFVARCHAR2;
+begin
+
+select D0367 bulk collect into D0367_CONTENTS from 
+
+(
+	select 1, '' as D0367 from DUAL union
+	select 2, '' as D0367 from DUAL union
+	select 3, '' as D0367 from DUAL union
+	select 4, '' as D0367 from dual union
+	select 5, '' as D0367 from DUAL union
+	select 6, '' as D0367 from DUAL
+);
+
+return D0361_CONTENTS;
+
 end;
 
 ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------=

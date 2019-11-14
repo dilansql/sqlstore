@@ -1,4 +1,4 @@
-create or replace package                    TESTING.FLATFILECREATOR AS
+create or replace package                            FLATFILECREATOR AS
 
 ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 --GAS
@@ -73,7 +73,7 @@ function ELEC_D0217_58M (PMPAN in number) return GM_MANAGER.TABLEOFVARCHAR2;
 function ELEC_D0359 (PMPAN in number) return GM_MANAGER.TABLEOFVARCHAR2;
 function ELEC_D0360 (PMPAN in number) return GM_MANAGER.TABLEOFVARCHAR2;
 function ELEC_D0361 (PMPAN in number) return GM_MANAGER.TABLEOFVARCHAR2;
-
+function ELEC_D0367 (PMPAN in number) return GM_MANAGER.TABLEOFVARCHAR2;
 ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 --PAY
 ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
