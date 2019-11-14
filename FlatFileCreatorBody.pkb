@@ -1179,15 +1179,16 @@ begin
 select D0367 bulk collect into D0367_CONTENTS from 
 
 (
-	select 1, '' as D0367 from DUAL union
-	select 2, '' as D0367 from DUAL union
-	select 3, '' as D0367 from DUAL union
-	select 4, '' as D0367 from dual union
-	select 5, '' as D0367 from DUAL union
-	select 6, '' as D0367 from DUAL
+	select 1, 'ZHV|'||(select CUSTOMERID from CONTRACTS.CONTRACTS_VW where MPANCORE = PMPAN)||'|D0367001|X|COOP|M|BMSL|'||(select TO_CHAR(SYSDATE, 'YYYYMMDDHHMMSS') from DUAL)||'||||TR01|' as D0367 from DUAL union
+	select 2, '01J|'||PMPAN||'|'||(select to_CHAR(EFDMSMTD,'YYYYMMDD') from BILLING.NHHACTUALMETERREADINGS where MPANCORE = PMPAN and rownum = 1)||'|S|20191023|S2AD|' as D0367 from DUAL union
+	select 3, '02J|0169|'||(select to_CHAR(EFDREGI,'YYYYMMDD') from CONTRACTS.CONTRACTS_VW where MPANCORE = PMPAN and rownum = 1)||'|' as D0367 from DUAL union
+	select 4, '03J|00001|' as D0367 from DUAL union
+	select 5, '04J|'||(select METERID from BILLING.NHHACTUALMETERREADINGS where MPANCORE = PMPAN and rownum = 1)||'|' as D0367 from DUAL union
+	select 6, '05J|'||(select ''||substr(METERREGISTERID,2,3)||'||1|C|'||MEASUREMENTQUANTITYID||'|'||METERREGISTERMULTIPLIER||'.00|'||NOOFREGISTERDIGITS||'|' from BILLING.NHHACTUALMETERREADINGS where MPANCORE = PMPAN and rownum = 1)||'' as D0367 from DUAL union
+	select 7, 'ZPT|'||(select CUSTOMERID from CONTRACTS.CONTRACTS_VW where MPANCORE = PMPAN)||'|5||1|'||(select TO_CHAR(SYSDATE, 'YYYYMMDDHHMMSS') from DUAL)||'|' as D0367 from DUAL
 );
 
-return D0361_CONTENTS;
+return D0367_CONTENTS;
 
 end;
 
